@@ -21,7 +21,6 @@ abstract class MakePluginsJsonTask : DefaultTask() {
 
         for (subproject in project.allprojects) {
             subproject.extensions.findVvfExtension() ?: continue
-
             lst.add(subproject.makeVVFMetadata())
         }
 

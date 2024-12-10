@@ -8,14 +8,6 @@ abstract class GenSourcesTask : DefaultTask() {
     @TaskAction
     fun genSources() {
         val extension = project.extensions.getVvfExtension()
-
       TODO()
-//        val apkinfo = extension.apkinfo!!
-//
-//        val sourcesJarFile = apkinfo.cache.resolve("vvf-sources.jar")
-//
-//        val url = URL("${apkinfo.urlPrefix}/app-sources.jar")
-//
-//        url.download(sourcesJarFile, createProgressLogger(project, "Download sources"))
     }
 }

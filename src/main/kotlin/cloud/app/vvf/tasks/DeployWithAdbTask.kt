@@ -42,7 +42,7 @@ abstract class DeployWithAdbTask : DefaultTask() {
 
         device.push(file, RemoteFile(path + file.name))
 
-        val args = arrayListOf("start", "-a", "android.intent.action.VIEW", "-d", "cloudstreamapp:")
+        val args = arrayListOf("start", "-a", "android.intent.action.VIEW", "-d", "vvf://extensions")
 
         if (waitForDebugger) {
             args.add("-D")

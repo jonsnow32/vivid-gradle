@@ -32,7 +32,7 @@ fun Project.makeVVFMetadata(): VvfMetadata {
   val repo = extension.repository
 
   return VvfMetadata(
-    url = repo?.getRawLink("${this.name}.vvf", extension.buildBranch) ?: "",
+    url = repo?.getDownloadLink("${this.name}.vvf") ?: "",
     types = extension.types,
     className = extension.pluginClassName!!,
     version = version.toString(),

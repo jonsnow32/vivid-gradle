@@ -86,7 +86,6 @@ abstract class CompileDexTask : DefaultTask() {
             reader.accept(classNode, 0)
 
             for (annotation in classNode.visibleAnnotations.orEmpty() + classNode.invisibleAnnotations.orEmpty()) {
-              println("annotation.desc = ${annotation.desc}")
               if (annotation.desc == "Lcloud/app/vvf/common/VVFExtension;") {
                 val vvfExtension = project.extensions.getVvfExtension()
 
