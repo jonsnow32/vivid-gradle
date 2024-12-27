@@ -137,13 +137,15 @@ class VvfPlugin : Plugin<Project> {
           task.logger.lifecycle("Made VVF package at ${task.outputs.files.singleFile}")
         }
       }
-      project.rootProject.tasks.getByName("makePluginsJson").dependsOn(make)
 
-      project.tasks.register("uploadSource", UploadSourceTask::class.java) {
+      val uploadToRelease = project.tasks.register("uploadSource", UploadSourceTask::class.java) {
         it.group = TASK_GROUP
         it.dependsOn(make)
         it.input.set(make.get().outputs.files.singleFile)
       }
+
+      project.rootProject.tasks.getByName("makePluginsJson").dependsOn(uploadToRelease)
+
     }
 
     project.tasks.register("cleanCache", CleanCacheTask::class.java) {

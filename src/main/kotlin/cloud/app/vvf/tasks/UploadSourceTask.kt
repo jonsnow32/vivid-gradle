@@ -21,6 +21,7 @@ abstract class UploadSourceTask : DefaultTask() {
   @TaskAction
   fun uploadSource() {
 
+    println("Begin upload source")
     val extension = project.extensions.getVvfExtension()
     val repository = extension.repository ?: error("Missing repository")
     val token = repository.accessToken ?: error("Missing git token")
@@ -48,8 +49,11 @@ abstract class UploadSourceTask : DefaultTask() {
     // 3. Get the release upload URL
     val uploadUrl = getReleaseUploadUrl(githubApiUrl, releaseId, token)
 
+    println("uploadUrl = ${uploadUrl}")
     // 4. Upload the asset
     uploadReleaseAsset(outputFile, uploadUrl, token)
+
+
   }
 
   fun getOrCreateRelease(
@@ -159,16 +163,43 @@ abstract class UploadSourceTask : DefaultTask() {
       val url = URL(existingAssetUrl)
       val connection = url.openConnection() as HttpURLConnection
       connection.requestMethod = "PATCH" // Use PATCH to update
-      // ... (rest of the code for updating the asset) ...
+      connection.setRequestProperty("Authorization", "token $token")
+      connection.setRequestProperty("Content-Type", "application/octet-stream") // Or appropriate content type
+      connection.doOutput = true
+
+      assetFile.inputStream().use { input ->
+        connection.outputStream.use { output ->
+          input.copyTo(output)
+        }
+      }
+
+      if (connection.responseCode !in 200..299) {
+        throw RuntimeException("Failed to update asset: ${connection.responseCode} - ${connection.responseMessage}")
+      }
+
+      println("Asset updated successfully: ${assetFile.name}")
     } else {
       // Upload new asset
       val url = URL("$uploadUrl?name=${assetFile.name}")
       val connection = url.openConnection() as HttpURLConnection
       connection.requestMethod = "POST"
-      // ... (original code for uploading a new asset) ...
+      connection.setRequestProperty("Authorization", "token $token")
+      connection.setRequestProperty("Content-Type", "application/octet-stream") // Or appropriate content type
+      connection.doOutput = true
+
+      assetFile.inputStream().use { input ->
+        connection.outputStream.use { output ->
+          input.copyTo(output)
+        }
+      }
+
+      if (connection.responseCode != HttpURLConnection.HTTP_CREATED) {
+        throw RuntimeException("Failed to upload asset: ${connection.responseCode} - ${connection.responseMessage}")
+      }
+
+      println("Asset uploaded successfully: ${assetFile.name}")
     }
   }
-
   private fun findExistingAssetUrl(uploadUrl: String, assetName: String, token: String): String? {
     val url = URL(uploadUrl.replace("{?name,label}", "")) // Remove query parameters
     val connection = url.openConnection() as HttpURLConnection

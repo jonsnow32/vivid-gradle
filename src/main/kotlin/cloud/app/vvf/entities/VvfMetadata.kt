@@ -9,9 +9,9 @@ enum class ExtensionType(val feature: String) {
 }
 
 open class VvfMetadata(
+  val className: String,
   val url: String,
   val types: List<String>?,
-  val className: String,
   val version: String,
   val iconUrl: String?,
   val name: String,
@@ -19,7 +19,7 @@ open class VvfMetadata(
   val author: List<String>,
   val repoUrl: String?,
   val fileSize: Long?,
-  val status: Int
+  val status: Int,
 )
 
 fun Project.makeVVFMetadata(): VvfMetadata {
@@ -42,6 +42,6 @@ fun Project.makeVVFMetadata(): VvfMetadata {
     author = extension.authors,
     repoUrl = repo?.url,
     fileSize = extension.fileSize,
-    status = extension.status
+    status = extension.status,
   )
 }
