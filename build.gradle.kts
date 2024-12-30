@@ -37,7 +37,7 @@ kotlin {
 gradlePlugin {
   plugins {
     create("vvfPlugin") {
-      id = group.toString()
+      id = "cloud.app.vvf.plugin.gradle"
       implementationClass = "cloud.app.vvf.VvfPlugin"
     }
   }
