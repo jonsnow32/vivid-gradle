@@ -4,7 +4,7 @@ plugins {
   id("maven-publish")
 }
 
-group = "cloud.app"
+group = "cloud.app.vvf.plugin"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -37,7 +37,7 @@ kotlin {
 gradlePlugin {
   plugins {
     create("vvfPlugin") {
-      id = "cloud.app.vvf.plugin"
+      id = group.toString()
       implementationClass = "cloud.app.vvf.VvfPlugin"
     }
   }
