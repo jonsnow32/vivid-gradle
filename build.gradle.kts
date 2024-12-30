@@ -4,7 +4,7 @@ plugins {
   id("maven-publish")
 }
 
-group = "cloud.app.vvf.plugin"
+group = "cloud.app"
 version = "1.0-SNAPSHOT"
 
 repositories {
