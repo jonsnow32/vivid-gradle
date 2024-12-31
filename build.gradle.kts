@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "cloud.app.vvf"
-version = "1.0"
+version = "1.0.0"
 
 repositories {
   mavenCentral()
@@ -42,15 +42,26 @@ gradlePlugin {
     create("vvfPlugin") {
       displayName = "VVF gradle plugin"
       description = "Automate building the VVF extension."
-      id = "cloud.app.vvf.plugin.gradle"
+      id = "cloud.app.vvf.plugin"
       tags = listOf("testing", "integrationTesting", "vvf extensions")
       implementationClass = "cloud.app.vvf.VvfPlugin"
     }
   }
 }
+
 publishing {
+  publications {
+    create<MavenPublication>("vvfPlugin") {
+      groupId = "cloud.app.vvf" // Matches the `group` in your build script
+      artifactId = "vvf-plugin" // Simpler artifact ID
+      version = "1.0.0"
+
+      from(components["java"])
+    }
+  }
   repositories {
-    mavenLocal()
+    mavenLocal() // For local testing
+    maven("https://jitpack.io") // For JitPack publishing
   }
 }
 
