@@ -2,10 +2,11 @@ plugins {
   kotlin("jvm") version "2.0.21"
   id("java-gradle-plugin")
   id("maven-publish")
+  id("com.gradle.plugin-publish") version "1.3.0"
 }
 
-group = "cloud.app"
-version = "1.0-SNAPSHOT"
+group = "cloud.app.vvf"
+version = "1.0"
 
 repositories {
   mavenCentral()
@@ -35,9 +36,14 @@ kotlin {
 
 
 gradlePlugin {
+  website = "https://github.com/jonsnow32/vivid-gradle"
+  vcsUrl = "https://github.com/jonsnow32/vivid-gradle.git"
   plugins {
     create("vvfPlugin") {
+      displayName = "VVF gradle plugin"
+      description = "Automate building the VVF extension."
       id = "cloud.app.vvf.plugin.gradle"
+      tags = listOf("testing", "integrationTesting", "vvf extensions")
       implementationClass = "cloud.app.vvf.VvfPlugin"
     }
   }
