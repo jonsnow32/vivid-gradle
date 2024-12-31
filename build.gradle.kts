@@ -61,10 +61,12 @@ publishing {
   }
   repositories {
     mavenLocal() // For local testing
-    maven("https://jitpack.io") // For JitPack publishing
   }
 }
 
 tasks.test {
   useJUnitPlatform()
+}
+tasks.withType<Jar> {
+  exclude("**/*.md", "**/test/**", "**/docs/**")
 }
