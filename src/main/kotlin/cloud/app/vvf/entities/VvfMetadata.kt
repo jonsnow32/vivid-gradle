@@ -20,6 +20,7 @@ open class VvfMetadata(
   val repoUrl: String?,
   val fileSize: Long?,
   val status: Int,
+  val vvfLibVersion: String?
 )
 
 fun Project.makeVVFMetadata(): VvfMetadata {
@@ -35,6 +36,7 @@ fun Project.makeVVFMetadata(): VvfMetadata {
     url = repo?.getDownloadLink("${this.name}.vvf") ?: "",
     types = extension.types,
     className = extension.pluginClassName!!,
+    vvfLibVersion = extension.vffLibVersion,
     version = version.toString(),
     iconUrl = extension.iconUrl,
     name = this.name,

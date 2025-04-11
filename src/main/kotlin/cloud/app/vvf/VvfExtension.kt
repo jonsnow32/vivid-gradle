@@ -1,6 +1,5 @@
 package cloud.app.vvf
 
-import cloud.app.vvf.entities.VvfMetadata
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionContainer
 import org.gradle.process.ExecSpec
@@ -10,6 +9,7 @@ import javax.inject.Inject
 abstract class VvfExtension @Inject constructor(val project: Project) {
   internal var fileSize: Long? = null
   internal var pluginClassName: String? = null
+  internal var vffLibVersion: String? = null
 
   var requiresResources = false
   var description: String? = null
@@ -72,9 +72,6 @@ abstract class VvfExtension @Inject constructor(val project: Project) {
     }
   }
 }
-
-
-
 
 fun ExtensionContainer.getVvfExtension(): VvfExtension {
   return getByName("vvfExtension") as VvfExtension

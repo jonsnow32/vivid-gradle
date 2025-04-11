@@ -52,8 +52,6 @@ abstract class UploadSourceTask : DefaultTask() {
     println("uploadUrl = ${uploadUrl}")
     // 4. Upload the asset
     uploadReleaseAsset(outputFile, uploadUrl, token)
-
-
   }
 
   fun getOrCreateRelease(
@@ -155,6 +153,7 @@ abstract class UploadSourceTask : DefaultTask() {
     val jsonResponse = JsonParser.parseString(response).asJsonObject
     return jsonResponse.get("upload_url").asString.replace("{?name,label}", "")
   }
+
   fun uploadReleaseAsset(assetFile: File, uploadUrl: String, token: String, overrideExisting: Boolean = false) {
     val existingAssetUrl = if (overrideExisting) findExistingAssetUrl(uploadUrl, assetFile.name, token) else null
 

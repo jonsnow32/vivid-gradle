@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "cloud.app.vvf"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
   mavenCentral()
@@ -54,7 +54,7 @@ publishing {
     create<MavenPublication>("vvfPlugin") {
       groupId = "cloud.app.vvf" // Matches the `group` in your build script
       artifactId = "vvf-plugin" // Simpler artifact ID
-      version = "1.0.0"
+      version = "1.0.1"
 
       from(components["java"])
     }
@@ -70,3 +70,5 @@ tasks.test {
 tasks.withType<Jar> {
   exclude("**/*.md", "**/test/**", "**/docs/**")
 }
+
+//./gradlew publishToMavenLocal
